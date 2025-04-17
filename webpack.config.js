@@ -1,3 +1,5 @@
+require('dotenv').config(); // ✅ Add this line at the top to load .env
+
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
