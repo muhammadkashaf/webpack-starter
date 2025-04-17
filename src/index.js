@@ -26,7 +26,7 @@ async function checkForNewVersion() {
       notifyUpdateAvailable();
     }
   } catch (err) {
-    console.warn('Could not check app version:', err);
+    console.warn('Could not check app version:', err)
   }
 }
 
