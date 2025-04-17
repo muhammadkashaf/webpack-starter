@@ -1,17 +1,24 @@
-require('dotenv').config(); // ✅ Add this line at the top to load .env
+require('dotenv').config(); // Load .env
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const webpack = require('webpack');
 const dayjs = require('dayjs');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-// Plugin to generate meta.json with version and build time
+// ✅ Generate a consistent build version for both app & meta.json
+const buildVersion = Date.now().toString();
+
+// ✅ Plugin to generate meta.json
 class GenerateMetaPlugin {
+  constructor(version) {
+    this.version = version;
+  }
+
   apply(compiler) {
     compiler.hooks.emit.tapAsync('GenerateMetaPlugin', (compilation, callback) => {
       const meta = {
-        version: compilation.hash,
+        version: this.version,
         builtAt: dayjs().format('YYYY-MM-DD HH:mm:ss'),
       };
       const json = JSON.stringify(meta, null, 2);
@@ -32,17 +39,18 @@ const plugins = [
     filename: 'index.html',
     template: 'src/template.html',
   }),
-  new GenerateMetaPlugin(),
+  new GenerateMetaPlugin(buildVersion),
   new webpack.DefinePlugin({
-    'process.env.REACT_APP_VERSION': JSON.stringify(Date.now().toString()),
+    'process.env.REACT_APP_VERSION': JSON.stringify(buildVersion),
   }),
 ];
 
+// ✅ Only run Bundle Analyzer when explicitly enabled
 if (process.env.ANALYZE === 'true') {
   plugins.push(
     new BundleAnalyzerPlugin({
-      analyzerMode: 'static',
-      openAnalyzer: false,
+      analyzerMode: 'static', // No server
+      openAnalyzer: false,    // Don’t auto-open
       reportFilename: 'bundle-report.html',
     })
   );
