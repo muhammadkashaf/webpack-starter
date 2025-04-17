@@ -24,8 +24,25 @@ class GenerateMetaPlugin {
   }
 }
 
+const plugins = [
+  new HtmlWebpackPlugin({
+    title: 'Webpack App',
+    filename: 'index.html',
+    template: 'src/template.html',
+  }),
+  new GenerateMetaPlugin(),
+  new webpack.DefinePlugin({
+    'process.env.REACT_APP_VERSION': JSON.stringify(Date.now().toString()),
+  }),
+];
+
+// ✅ Only run analyzer if ANALYZE=true is passed
+if (process.env.ANALYZE === 'true') {
+  plugins.push(new BundleAnalyzerPlugin());
+}
+
 module.exports = {
-  mode: 'development', 
+  mode: 'development',
   entry: {
     bundle: path.resolve(__dirname, 'src/index.js'),
   },
@@ -68,16 +85,5 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: 'Webpack App',
-      filename: 'index.html',
-      template: 'src/template.html',
-    }),
-    new BundleAnalyzerPlugin(),
-    new GenerateMetaPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.REACT_APP_VERSION': JSON.stringify(Date.now().toString()),
-    }),
-  ],
+  plugins,
 };
