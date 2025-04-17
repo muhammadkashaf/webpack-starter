@@ -23,8 +23,6 @@ async function checkForNewVersion() {
     console.log('Meta Version:', meta.version);
 
     if (meta.version !== CURRENT_VERSION) {
-      console.log('🔁 New version detected, reloading...');
-      location.reload(true); // force hard refresh
       notifyUpdateAvailable();
     }
   } catch (err) {
