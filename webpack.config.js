@@ -38,9 +38,14 @@ const plugins = [
   }),
 ];
 
-// ✅ Only run analyzer if ANALYZE=true is passed
 if (process.env.ANALYZE === 'true') {
-  plugins.push(new BundleAnalyzerPlugin());
+  plugins.push(
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      openAnalyzer: false,
+      reportFilename: 'bundle-report.html',
+    })
+  );
 }
 
 module.exports = {
