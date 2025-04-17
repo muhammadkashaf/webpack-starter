@@ -14,13 +14,13 @@ generateJoke();
 // === Version Checker ===
 const CURRENT_VERSION = process.env.REACT_APP_VERSION;
 console.log('App Version:', CURRENT_VERSION);
-console.log('Meta Version:', meta.version);
 const POLL_INTERVAL = 1000 * 10; 
 
 async function checkForNewVersion() {
   try {
     const res = await fetch('/meta.json', { cache: 'no-store' });
     const meta = await res.json();
+    console.log('Meta Version:', meta.version);
 
     if (meta.version !== CURRENT_VERSION) {
       notifyUpdateAvailable();
