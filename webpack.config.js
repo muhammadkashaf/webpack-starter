@@ -49,8 +49,8 @@ const plugins = [
 if (process.env.ANALYZE === 'true') {
   plugins.push(
     new BundleAnalyzerPlugin({
-      analyzerMode: 'static', // No server
-      openAnalyzer: false,    // Don’t auto-open
+      analyzerMode: 'static',
+      openAnalyzer: false,
       reportFilename: 'bundle-report.html',
     })
   );
@@ -90,7 +90,15 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env'],
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  useBuiltIns: 'usage',
+                  corejs: 3,
+                },
+              ],
+            ],
           },
         },
       },

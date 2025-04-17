@@ -27,6 +27,8 @@
   },
   "dependencies": {
     "axios": "^0.26.1",
-    "dayjs": "^1.11.13"
+    "core-js": "^3.41.0",
+    "dayjs": "^1.11.13",
+    "regenerator-runtime": "^0.14.1"
   }
 }

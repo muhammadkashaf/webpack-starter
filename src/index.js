@@ -14,6 +14,7 @@ generateJoke();
 // === Version Checker ===
 const CURRENT_VERSION = process.env.REACT_APP_VERSION;
 console.log('App Version:', CURRENT_VERSION);
+console.log('Meta Version:', meta.version);
 const POLL_INTERVAL = 1000 * 10; 
 
 async function checkForNewVersion() {
